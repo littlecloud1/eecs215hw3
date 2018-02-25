@@ -1,10 +1,11 @@
 
 import sys
+#value for testing
 
-val = [40, 35, 30]
-weight = [3, 2, 5]
-totalweight = 8
-n = len(val)
+# val = [40, 35, 30]
+# weight = [3, 2, 5]
+# totalweight = 8
+# n = len(val)
 
 def knapsack_rep(W,weight,val,n):
     #initialization
@@ -18,13 +19,13 @@ def knapsack_rep(W,weight,val,n):
             else:
                 OPT[i][w] = max(val[i-1]+OPT[i][w-weight[i-1]], OPT[i-1][w]) #no repetition if OPT[i][w] = max(val[i-1]+OPT[i-1][w-weight[i-1]], OPT[i-1][w])
 
-for i in range(n+1):
-    print (OPT[i])
-    #calculate the item chosen
+    for i in range(n+1):
+        print (OPT[i])
+        #calculate the item chosen
     
     choice=[]
-    weightremaining = totalweight
-    w = totalweight
+    weightremaining = W
+    w = W
     i = n
     while weightremaining>0:
         if val[i - 1] + OPT[i][w - weight[i - 1]]>=OPT[i - 1][w]:
@@ -32,46 +33,41 @@ for i in range(n+1):
             weightremaining -= weight[i - 1]
         else:
             i-=1
-    print(choice)
-    return OPT[n][W]
+    print "choose: ",choice
+    print "optimal value", OPT[n][W]
 
 
 
-print(knapsack_rep(totalweight,weight,val,n))
+
+# print(knapsack_rep(totalweight,weight,val,n))
 
 
-# def main(fn, s):
-#     weight = []
-#     val = []
-#     l = 0;#line
-#     with open(fn) as fp:
-#
-#         for line in fp:
-#             if l == 0:
-#                 totalweight = fp.readline
-#                 print totalweight
-#             if l > 1:
-#                 # Split lines by chosen character.
-#                 nodes = line.strip().split(" ")
-#                 # Format string example:
-#                 weight.append(nodes[1])
-#                 val.append(nodes[2])
-#                 print "weight: %s\t value: %s" % (nodes[1], nodes[2])
-#                 # Add edge to graph with integer IDs.
-#             l += 1
-#     val = [40, 35, 30]
-#     weight = [3, 2, 5]
-#     totalweight = 8
-#     n = len(val)
-#     print(knapsack_rep(totalweight, weight, val, n))
-#
-#
-#
-# if __name__ == "__main__":
-#     print "Program starts"
-#     print sys.argv
-#     if len(sys.argv) == 3:
-#         fn = sys.argv[1] # Filename
-#         print "filename: "+fn
-#         s  = sys.argv[2] # Source
-#         main(fn,int(s))
+
+def main(argv):
+    weight = []
+    val = []
+    l = 0;#line
+    fn = argv[1]
+    with open(fn) as fp:
+        
+        for line in fp:
+            if l == 0:
+                totalweight = int(line)
+                print "totalweight: %s" % (totalweight)
+            if l > 0:
+                # Split lines by chosen character.
+                nodes = line.strip().split(" ")
+                # Format string example:
+                weight.append(int(nodes[1]))
+                val.append(int(nodes[2]))
+                print "weight: %s\t value: %s" % (nodes[1], nodes[2])
+            # Add edge to graph with integer IDs.
+            l += 1
+    n = len(val)
+    knapsack_rep(totalweight, weight, val, n)
+
+
+
+if __name__ == "__main__":
+    main(sys.argv)
+
