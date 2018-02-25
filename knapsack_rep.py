@@ -19,20 +19,27 @@ def knapsack_rep(W,weight,val,n):
             else:
                 OPT[i][w] = max(val[i-1]+OPT[i][w-weight[i-1]], OPT[i-1][w]) #no repetition if OPT[i][w] = max(val[i-1]+OPT[i-1][w-weight[i-1]], OPT[i-1][w])
 
-for i in range(n+1):
-    print (OPT[i])
-    #calculate the item chosen
+    for i in range(n+1):
+        print (OPT[i])
+        #calculate the item chosen
     
     choice=[]
     weightremaining = W
     w = W
     i = n
     while weightremaining>0:
-        if val[i - 1] + OPT[i][w - weight[i - 1]]>=OPT[i - 1][w]:
-            choice.append(i)
-            weightremaining -= weight[i - 1]
+        if val[i - 1] + OPT[i][weightremaining- weight[i - 1]] >= OPT[i - 1][weightremaining]:
+            if weight[i-1] <= weightremaining:
+                choice.append(i)
+                weightremaining -= weight[i - 1]
+            else:
+                i -= 1
+                if i==0:
+                    i = n
         else:
-            i-=1
+            i -= 1
+            if i == 0:
+                i = n
     print "choose: ",choice
     print "optimal value", OPT[n][W]
     return OPT[n][W], choice
