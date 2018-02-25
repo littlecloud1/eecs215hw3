@@ -19,9 +19,9 @@ def knapsack_rep(W,weight,val,n):
             else:
                 OPT[i][w] = max(val[i-1]+OPT[i][w-weight[i-1]], OPT[i-1][w]) #no repetition if OPT[i][w] = max(val[i-1]+OPT[i-1][w-weight[i-1]], OPT[i-1][w])
 
-    for i in range(n+1):
-        print (OPT[i])
-        #calculate the item chosen
+for i in range(n+1):
+    print (OPT[i])
+    #calculate the item chosen
     
     choice=[]
     weightremaining = W
@@ -35,13 +35,18 @@ def knapsack_rep(W,weight,val,n):
             i-=1
     print "choose: ",choice
     print "optimal value", OPT[n][W]
-
+    return OPT[n][W], choice
 
 
 
 # print(knapsack_rep(totalweight,weight,val,n))
 
-
+def output(outfile,optimal,choice):
+    # file output
+    f = open(outfile, 'w')
+    f.write(str(optimal) + "\n")
+    f.write(str(choice) + "\n")
+    f.close()
 
 def main(argv):
     weight = []
@@ -64,7 +69,8 @@ def main(argv):
             # Add edge to graph with integer IDs.
             l += 1
     n = len(val)
-    knapsack_rep(totalweight, weight, val, n)
+    optimal,choice = knapsack_rep(totalweight, weight, val, n)
+    output(argv[2],optimal,choice)
 
 
 
