@@ -9,7 +9,7 @@ import sys
 
 def knapsack_mul(W,weight,val,n,vol,Z):
     #initialization
-    OPT = [[[0 for x in range(W+1)] for y in range(n+1)] for z in range(Z+1)]
+    OPT = [[[0 for x in range(Z+1)] for y in range(W+1)] for z in range(n+1)]
     
     #compute opt table
     for i in range(1,n+1):
@@ -18,31 +18,34 @@ def knapsack_mul(W,weight,val,n,vol,Z):
                 if weight[i-1] > w or vol[i-1] > z:
                     OPT[i][w][z] = OPT[i-1][w][z]
                 else:
-                    OPT[i][w][z] = max(val[i-1]+OPT[i-1][w-weight[i-1][z-vol[i-1]]], OPT[i-1][w][z]) #no
+                    OPT[i][w][z] = max(val[i-1]+OPT[i-1][w-weight[i-1]][z-vol[i-1]], OPT[i-1][w][z]) #no
 
     for i in range(n+1):
-        print (OPT[i])
-        #calculate the item chosen
+        for j in range(W+1):
+            print (OPT[i][j])
     
-#    choice=[]
-#    weightremaining = W
-#    w = W
-#    i = n
-#    while weightremaining>0:
-#        if val[i - 1] + OPT[i][weightremaining- weight[i - 1]] >= OPT[i - 1][weightremaining]:
-#            if weight[i-1] <= weightremaining:
-#                choice.append(i)
-#                weightremaining -= weight[i - 1]
-#            else:
-#                i -= 1
-#                if i==0:
-#                    i = n
-#        else:
-#            i -= 1
-#            if i == 0:
-#                i = n
-#    print "choose: ",choice
-#    print "optimal value", OPT[n][W]
+    
+    #calculate the item chosen
+    
+    #    choice=[]
+    #    weightremaining = W
+    #    w = W
+    #    i = n
+    #    while weightremaining>0:
+    #        if val[i - 1] + OPT[i][weightremaining- weight[i - 1]] >= OPT[i - 1][weightremaining]:
+    #            if weight[i-1] <= weightremaining:
+    #                choice.append(i)
+    #                weightremaining -= weight[i - 1]
+    #            else:
+    #                i -= 1
+    #                if i==0:
+    #                    i = n
+    #        else:
+    #            i -= 1
+    #            if i == 0:
+    #                i = n
+    #    print "choose: ",choice
+    #    print "optimal value", OPT[n][W]
     return OPT[n][W][Z]#, choice
 
 
@@ -81,8 +84,9 @@ def main(argv):
             # Add edge to graph with integer IDs.
             l += 1
     n = len(val)
-    #optimal,choice = knapsack_mul(totalweight, weight, val, n, vol, totalvolume)
-    #output(argv[2],optimal,choice)
+    print(knapsack_mul(totalweight, weight, val, n, vol, totalvolume))
+#optimal,choice = knapsack_mul(totalweight, weight, val, n, vol, totalvolume)
+#output(argv[2],optimal,choice)
 
 
 
