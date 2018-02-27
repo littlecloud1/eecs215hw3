@@ -21,6 +21,7 @@ def knapsack_mul(W,weight,val,n,vol,Z):
                     OPT[i][w][z] = max(val[i-1]+OPT[i-1][w-weight[i-1]][z-vol[i-1]], OPT[i-1][w][z]) #no
 
     for i in range(n+1):
+        print (i)
         for j in range(W+1):
             print (OPT[i][j])
     
